@@ -1,22 +1,46 @@
 import logo from './logo.svg';
 import './App.css';
+import { getRandomJoke } from './services/icanhazdadjoke';
+import React, { useState, useEffect } from 'react'
+import { getByDisplayValue } from '@testing-library/dom';
 
 function App() {
+  const [data, setData] = useState({})
+  const [joke, setJoke] = useState("Nice to meet you hungry, I'm dad")
+  const [button, setButton] = useState(false)
+
+  useEffect(
+    () => {
+      getRandomJoke()
+        .then(
+          (response) => {
+            setData(response.data)
+          }).catch(
+            (error) => {
+              console.log(error)
+      })
+    }, [button]
+  )
+
+  useEffect(
+    () => {
+      console.log(data)
+      setJoke(data.joke)
+    }, [data]
+  )
+
+  const onClick = () => {
+    button ? setButton(false) : setButton(true)
+  }
+  
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {joke}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={onClick}>New Joke</button>
       </header>
     </div>
   );
