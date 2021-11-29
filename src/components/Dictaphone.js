@@ -1,18 +1,58 @@
 import React from 'react';
 import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { getRandomJoke, searchForJoke } from '../services/icanhazdadjoke';
+
 
 const appId = '76fc22f7-600f-4ac6-a8f0-0c6c58c4a8ca';
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
 SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 
-const Dictaphone = () => {
+const Dictaphone = (props) => {
+    const commands = [
+    {
+      command: '* RANDOM *',
+      callback: () => {
+      getRandomJoke()
+        .then(
+          (response) => {
+            props.setData(response.data)
+          }).catch(
+            (error) => {
+              console.log(error)
+            })
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.8
+    },
+    {
+      command: ['I am :condition', "I'm :condition", 'I feel :condition', 'I am feeling :condition'],
+      callback: (condition) => props.setJoke(`Hi ${condition}, I'm dad.`),
+      matchInterim: true,
+      bestMatchOnly: true
+    },
+    {
+      command: 'Tell me a joke about :condition',
+      callback: (condition) => {
+      searchForJoke(condition)
+        .then(
+          (response) => {
+            props.setData(response.data)
+          }).catch(
+            (error) => {
+              console.log(error)
+            })
+      },
+      isFuzzyMatch: true,
+      fuzzyMatchingThreshold: 0.5
+    },
+  ]
   const {
     transcript,
     listening,
     browserSupportsSpeechRecognition,
     resetTranscript,
-  } = useSpeechRecognition();
+  } = useSpeechRecognition({commands});
     const startListening = () => {
         resetTranscript()
         SpeechRecognition.startListening({ continuous: true })

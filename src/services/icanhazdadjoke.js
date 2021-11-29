@@ -9,3 +9,11 @@ export const getRandomJoke = async () => {
         url: `${API_BASE_URL}/`
     })
 }
+export const searchForJoke = async (term) => {
+    return await axios({
+        headers:
+            { "Accept": "application/json" },
+        method: 'GET',
+        url: `${API_BASE_URL}/search?term=${term}`
+    })
+}

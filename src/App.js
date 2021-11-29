@@ -26,6 +26,7 @@ function App() {
     () => {
       console.log(data)
       setJoke(data.joke)
+      // TODO check if data contains more than one entry.
     }, [data]
   )
 
@@ -41,7 +42,7 @@ function App() {
           {joke}
         </p>
         <button onClick={onClick}>New Random Joke</button>
-        <Dictaphone></Dictaphone>
+        <Dictaphone setData={(data) => setData(data)} setJoke={(text) => setJoke(text)}></Dictaphone>
       </header>
     </div>
   );
