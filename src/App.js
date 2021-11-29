@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { getRandomJoke } from './services/icanhazdadjoke';
 import React, { useState, useEffect } from 'react'
-import { getByDisplayValue } from '@testing-library/dom';
+import Dictaphone from './components/Dictaphone';
 
 function App() {
   const [data, setData] = useState({})
@@ -40,7 +40,8 @@ function App() {
         <p>
           {joke}
         </p>
-        <button onClick={onClick}>New Joke</button>
+        <button onClick={onClick}>New Random Joke</button>
+        <Dictaphone></Dictaphone>
       </header>
     </div>
   );

@@ -9,4 +9,3 @@ export const getRandomJoke = async () => {
         url: `${API_BASE_URL}/`
     })
 }
-
