@@ -11,7 +11,7 @@ SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 const Dictaphone = (props) => {
     const commands = [
     {
-      command: '* RANDOM *',
+      command: '*RANDOM*',
       callback: () => {
       getRandomJoke()
         .then(
