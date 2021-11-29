@@ -24,8 +24,18 @@ function App() {
 
   useEffect(
     () => {
-      console.log(data)
-      setJoke(data.joke)
+      // console.log(data)
+      if (data && data.joke) {
+        setJoke(data.joke)
+      }
+      else if (data && data.results) {
+        if (data.results[0]) {
+          setJoke(data.results[0].joke)
+        } else {
+          // TODO handle no joke found better.
+          setJoke("I don't know a joke about that.")
+        }
+      }
       // TODO check if data contains more than one entry.
     }, [data]
   )

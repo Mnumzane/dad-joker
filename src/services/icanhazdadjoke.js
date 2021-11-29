@@ -10,6 +10,7 @@ export const getRandomJoke = async () => {
     })
 }
 export const searchForJoke = async (term) => {
+    console.log(term)
     return await axios({
         headers:
             { "Accept": "application/json" },

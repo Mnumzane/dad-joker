@@ -24,17 +24,12 @@ const Dictaphone = (props) => {
       },
       isFuzzyMatch: true,
       fuzzyMatchingThreshold: 0.8
-    },
-    {
-      command: ['I am :condition', "I'm :condition", 'I feel :condition', 'I am feeling :condition'],
-      callback: (condition) => props.setJoke(`Hi ${condition}, I'm dad.`),
-      matchInterim: true,
-      bestMatchOnly: true
-    },
-    {
-      command: 'Tell me a joke about :condition',
-      callback: (condition) => {
-      searchForJoke(condition)
+        },
+        {
+      command: ['Tell me a joke about :condition', 'Do you know a joke about :condition'],
+        callback: (condition) => {
+            console.log("Condition: " + condition)
+      searchForJoke(`${condition}`)
         .then(
           (response) => {
             props.setData(response.data)
@@ -43,9 +38,16 @@ const Dictaphone = (props) => {
               console.log(error)
             })
       },
-      isFuzzyMatch: true,
-      fuzzyMatchingThreshold: 0.5
+    //   isFuzzyMatch: true,
+    //   fuzzyMatchingThreshold: 0.5,
+    //   bestMatchOnly: true
     },
+    {
+      command: ['I am :condition', "I'm :condition", 'I feel :condition', 'I am feeling :condition', "I'm feeling :condition"],
+      callback: (condition) => props.setJoke(`Hi ${condition}, I'm dad.`),
+      matchInterim: true,
+      bestMatchOnly: true
+    }, 
   ]
   const {
     transcript,
